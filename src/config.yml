@@ -1,0 +1,44 @@
+grid_30000:  # Configuration name (can be understood as experiment ID, corresponding to specific grid settings here)
+  # Data paths: Training and test data are in .mat format, containing conductivity structure, frequency and other information
+  TRAIN_PATH: Data/datasets/train_with_grid_64_24000_20260511_202916.npz  # Training dataset path
+  TEST_PATH: Data/datasets/test_with_grid_64_3000_20260511_202916.npz   # Test dataset path
+  VAL_PATH: Data/datasets/val_with_grid_64_3000_20260511_202916.npz  # Validation dataset path 
+
+  # Model saving settings
+  save_mode: state_dict  # Model saving mode:
+                        # - state_dict: Only save network parameters (.pkl file), small storage usage
+                        # - None: Save complete model (.pt file), including network structure and parameters (not recommended, high redundancy)
+  # Early stopping parameters (prevent overfitting)
+  patience: 50  # Early stopping patience: Stop training if test loss increases for 20 consecutive epochs (early stopping is used in the paper to avoid overfitting)
+  thre_epoch: 100  # Early stopping start epoch: Start judging early stopping after 100 training epochs (ensure the model fully learns basic patterns first)
+
+  # Computing resource configuration
+  cuda_id: 0  # CUDA device ID: Use GPU with ID 0 for training (if multiple GPUs are available, adjust accordingly)
+
+  # Fourier Neural Operator (FNO) architecture parameters (corresponding to FNO framework in Section 2.3 of the paper)
+  layer_num: 4  # Number of Fourier layers in FNO (6 layers are used in the paper, this is a simplified or tuned setting)
+  last_size: 128  # Dimension of the linear layer before the output layer (used for feature mapping to the final output dimension)
+  modes: 18  # Truncated number of Fourier modes (retain the first 18 low-frequency modes to capture main spatial features, similar settings adopted in the paper)
+  width: 32  # Number of channels in the first linear layer (controls network width, affects feature representation ability, set to 32 in the paper)
+  act_fno: gelu  # Activation function: Gaussian Error Linear Unit (GELU), selected in the paper to enhance nonlinear fitting ability
+  init_func: xavier_uniform  # Parameter initialization method: Xavier uniform initialization, used to stabilize gradients at the early training stage
+
+  # Frequency and sample configuration (corresponding to data generation strategy in Section 3.1 of the paper)
+  f_idx: [1,16,1,16]  # Frequency index range:
+                      # - Training: From index 1 to 11 (interval 1, total 11 frequencies)
+                      # - Test: Use the same frequency range 1 to 11 (ensure coverage of the same frequency range for fair generalization evaluation)
+  n_train: 20000  # Number of training samples
+  n_test: 3000  # Number of test samples
+  batch_size: 20  # Batch size: Process 20 samples per training iteration (balance memory usage and training efficiency)
+  batch_sizetest: 20  # Batch size for testing (same as training for consistency)
+  # Optimizer parameters (corresponding to training strategy in the paper)
+  tf_epochs: 200  # Maximum training epochs: Maximum 200 iterations
+  tf_lr: 0.001  # Initial learning rate: 1e-3
+  weight_decay: 0.0001  # Weight decay: 1e-4 (L2 regularization, prevent overfitting)
+  step_size: 20  # Learning rate adjustment interval: Decay once every 20 epochs
+  gamma: 0.6  # Learning rate decay factor: Adjust to 60% of the current value each time (similar scheduler used in the paper to accelerate convergence)
+  freq_sample: 3  # Frequency sampling interval: Sample once every 10 frequencies (multi-frequency training is adopted in the paper, this is a simplified setting)
+  # second_ep: 100
+  # Model saving interval
+  save_step: 20  # Save temporary model every 20 epochs (facilitate training recovery after interruption, or analyze model states during training)
+  print_interval: 20  # Print training log every 20 batches, 0 means no printing
