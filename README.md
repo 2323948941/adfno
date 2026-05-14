@@ -1,4 +1,4 @@
-# ADFNO: Attention-based Deep Fourier Neural Operator for 2D Magnetotelluric Forward Modeling
+# Automatic Differentiation Fourier Neural Operator with Sensitivity Constraint: A Rapid 2D Magnetotelluric Forward Modeling Method
 
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-ee4c2c.svg)](https://pytorch.org/)
