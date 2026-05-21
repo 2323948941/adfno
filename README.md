@@ -13,7 +13,7 @@ Magnetotelluric forward modeling — computing electromagnetic field responses f
 ### Key Features
 
 - **Hybrid architecture**: FNO performs frequency-domain global feature extraction; DeepONet branch/trunk networks encode spatial coordinates and conductivity distributions; UFNO blocks with simplified U-Nets refine local features
-- **Physics-guided dual attention**: Frequency attention adaptively weights contributions across frequencies; spatial attention uses conductivity gradient information to guide feature learning
+- ** dual attention**: Frequency attention adaptively weights contributions across frequencies; spatial attention uses conductivity gradient information to guide feature learning
 - **Multi-task learning**: Simultaneously predicts both electromagnetic field gradients and surface forward responses with an automatic weighting scheme
 - **Multi-frequency generalization**: Trained on multiple frequencies simultaneously, generalizes across frequencies without retraining
 
